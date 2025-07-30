@@ -25,7 +25,7 @@ python app.py
 ### Docker Run
 Run it from docker
 ```bash
-docker-compose up --build
+docker compose up --build
 
 ```
 <img width="1920" height="1048" alt="movieselector" src="https://github.com/user-attachments/assets/8c6543f9-8785-4ac0-9172-078afa205081" />
