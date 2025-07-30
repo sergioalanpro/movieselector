@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+}
+
+input, button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+img {
+    width: 100%;
+    max-width: 300px;
+    margin-top: 10px;
+}
+
+#trailerLink {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
