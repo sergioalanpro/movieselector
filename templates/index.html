@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Selector de Películas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #1c1c1c;
+            color: white;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .movie-card {
+            background-color: #292b2c;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+        }
+        .btn-custom {
+            background-color: #ff4757;
+            color: white;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .btn-custom:hover {
+            background-color: #e84118;
+        }
+        .loading {
+            display: none;
+            font-size: 18px;
+            color: #ff4757;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">🎬 Selecciona una Película</h1>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <select id="genre" class="form-select">
+                    <option value="">Seleccione un Género</option>
+                    <option value="28">Acción</option>
+                    <option value="35">Comedia</option>
+                    <option value="18">Drama</option>
+                    <option value="27">Terror</option>
+                    <option value="878">Ciencia Ficción</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <input type="number" id="year" class="form-control" placeholder="Año (Ej: 2020)" min="1900" max="2025">
+            </div>
+        </div>
+        <button id="getMovie" class="btn btn-custom">🎲 Elegir Película</button>
+        <p class="loading mt-3">Buscando película... 🔄</p>
+        <div id="movieResult" class="mt-4 movie-card d-none">
+            <h2 id="movieTitle"></h2>
+            <img id="moviePoster" class="img-fluid mt-2 rounded" style="max-width: 300px;">
+            <p id="movieOverview" class="mt-3"></p>
+            <a id="trailerLink" class="btn btn-warning mt-2 d-none" target="_blank">🎥 Ver Tráiler</a>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            $('#getMovie').click(function() {
+                $('.loading').show();
+                $('#movieResult').addClass('d-none');
+                let genre = $('#genre').val();
+                let year = $('#year').val();
+                $.getJSON(`/random_movie?genre=${genre}&year=${year}`, function(data) {
+                    $('.loading').hide();
+                    if (data.title !== "No se encontraron películas") {
+                        $('#movieTitle').text(data.title);
+                        $('#moviePoster').attr('src', data.poster);
+                        $('#movieOverview').text(data.overview);
+                        if (data.trailer) {
+                            $('#trailerLink').attr('href', data.trailer).removeClass('d-none');
+                        } else {
+                            $('#trailerLink').addClass('d-none');
+                        }
+                        $('#movieResult').removeClass('d-none');
+                    } else {
+                        alert("No se encontraron películas. Intenta de nuevo.");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
